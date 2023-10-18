@@ -1,5 +1,5 @@
-const form = document.forms["form"]; 
-form.addEventListener("submit", getWeather);
+const form = document.forms["form"] 
+form.addEventListener("submit", getWeather)
 
 const weatherContent = document.querySelector("#weatherContent")
 const errorDiv = document.querySelector("#errorDiv")
@@ -9,8 +9,12 @@ const API_KEY = "6baae4058e68a1a5809aaa3da51e9009"
 
 let bar = null
 
+window.onload = function() {
+    getUnitsFromLocalStorage()
+}
+
 function getWeather(e) {
-    e.preventDefault();
+    e.preventDefault()
     
     errorDiv.innerHTML = ""
     
@@ -21,7 +25,20 @@ function getWeather(e) {
     showSpinner()
     hideWeatherContent()
 
+    saveUnitsToLocalStorage(units)
+
     getWithJson(cidade, units)
+}
+
+function saveUnitsToLocalStorage(units) {
+    localStorage.setItem('units', units)
+}
+
+function getUnitsFromLocalStorage() {
+    const savedUnits = localStorage.getItem('units')
+    if (savedUnits) {
+        $('#units').val(savedUnits)
+    }
 }
 
 function showSpinner() {
@@ -41,7 +58,7 @@ function hideWeatherContent() {
 }
 
 function getWithJson(cidade, units) {
-    const req = new XMLHttpRequest();
+    const req = new XMLHttpRequest()
     
     req.onloadend = function(){
         resp = req.responseText
@@ -54,15 +71,15 @@ function getWithJson(cidade, units) {
         respObj = JSON.parse(resp)
         console.log(respObj)
         if(respObj.cod == 200) {
-            populateWeatherData(respObj, units);
+            populateWeatherData(respObj, units)
         } else {
             hideSpinner()
             errorDiv.innerHTML = "Cidade não encontrada!"
         }
     }   
     
-    req.open("GET", `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${API_KEY}&units=${units}&lang=pt_br`);
-    req.send(null);
+    req.open("GET", `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${API_KEY}&units=${units}&lang=pt_br`)
+    req.send(null)
 }
 
 function populateWeatherData(data, units) {
@@ -99,10 +116,10 @@ function populateWeatherData(data, units) {
 }
 
 function setProgress(percent) {
-    const p = 180 - (percent / 100) * 180;
-    bar.style.transform = `rotate(-${p}deg)`;
+    const p = 180 - (percent / 100) * 180
+    bar.style.transform = `rotate(-${p}deg)`
 }
 
 function padNumber(number) {
-    return number.toString().padStart(2, '0');
+    return number.toString().padStart(2, '0')
 }
