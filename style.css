@@ -1,0 +1,93 @@
+.darkenOnHover:hover {
+    background-image: linear-gradient(rgba(39, 39, 39, 0.1) 0 0) !important;
+}
+.darkenTextOnHover:hover {
+    filter: brightness(50%);
+}
+.lightenTextOnHover:hover {
+    filter: brightness(150%);
+}
+.shadow-light {
+    box-shadow: 0 0 300px rgba(255, 255, 255, 0.25);
+}
+.wrapper {
+    overflow: hidden;
+    position: absolute;
+    top: 0em;
+}
+.tempCircle {
+    height: 20svw;
+    width: 20svw;
+    min-width: 120px;
+    min-height: 120px;
+    max-width: 260px;
+    max-height: 260px;
+}
+.minTempWrapper {
+    left: -2.5em;
+    top: 50%;
+}
+.maxTempWrapper {
+    right: -2em;
+    top: 50%;
+}
+.w-fit {
+    width: fit-content !important;
+}
+.ms-2-25rem {
+    margin-left: 2.25rem;
+}
+.pe-2-25rem {
+    padding-right: 2.25rem;
+}
+#description {
+    width: 17svw;
+    min-width: 90px;
+    max-width: 230px;
+}
+  
+.circle {
+    width: 20svw;
+    height: 10svw;
+    min-width: 120px;
+    min-height: 60px;
+    max-width: 260px;
+    max-height: 130px;
+    background-color: transparent;
+    border-top-left-radius: 350px;
+    border-top-right-radius: 350px;
+    border: 0.5em solid #2ecc71;
+    /* border-bottom-color: transparent; */
+    border-bottom: 0;
+    transform-origin: bottom;
+    position: absolute;
+    z-index: 1;
+    transform: rotate(-180deg);
+    bottom: 0;
+    left: -0.5em;
+}
+.circle-out {
+    width: 20svw;
+    height: 10svw;
+    min-width: 120px;
+    min-height: 60px;
+    max-width: 260px;
+    max-height: 130px;
+    background-color: transparent;
+    border-top-left-radius: 350px;
+    border-top-right-radius: 350px;
+    border: 0.5em solid #bdc3c7;
+    border-bottom: 0;
+    position: relative;
+}
+
+@media (width > 768px) {
+    body > div {
+        width: 50%;
+    }
+}
+@media not (width > 768px) {
+    body > div {
+        width: 100%;
+    }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade Open Weather</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="vstack p-5" data-bs-theme="dark">
+    <div class="vstack align-self-center gap-5">
+        <form id="form" class="hstack w-100 gap-3">
+            <div class="input-group">
+                <div class="hstack justify-content-center align-self-center position-relative form-floating">
+                    <button class="p-0 border-0 z-2" type="submit">
+                        <i class="bi-search position-absolute start-0 top-50 translate-middle-y text-secondary lightenTextOnHover mx-3 fs-4" role="button"></i>
+                    </button>
+                    <input id="cidade" class="form-control ps-5 shadow-sm" type="search" name="cidade" placeholder="Cidade">
+                    <label class="ms-2-25rem z-1" for="cidade">Cidade</label>
+                </div>
+                <select class="form-select input-group-text flex-grow-0 w-fit pe-2-25rem" id="units" name="units">
+                    <option value="metric">°C</option>
+                    <option value="standard">°K</option>
+                    <option value="imperial">°F</option>
+                </select>
+            </div>
+        </form>
+        <div class="text-center">
+            <div id="loadingSpinner" class="spinner-border text-secondary d-none" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div id="errorDiv" class="text-secondary fs-5"></div>
+            <div id="weatherContent" class="d-none">
+                <div class="vstack gap-3 align-items-center rounded">
+                    <div class="vstack align-items-center position-relative">
+                        <div class="wrapper">  
+                            <div class="circle-out">
+                              <div id="bar" class="circle"></div>
+                            </div>
+                        </div>
+                        <div class="tempCircle d-flex align-items-center justify-content-center rounded-circle shadow-light position-relative vstack align-self-center">
+                            <div>
+                                <img id="icon" src="" alt="Ícone do tempo">
+                            </div>
+                            <div id="description" class="text-truncate text-capitalize"></div>
+                            <div>
+                                <span class="fs-1 position-relative">
+                                    <span id="temp"></span>
+                                    <span class="position-absolute top-0 fs-6 fw-semibold text-secondary"></span>
+                                </span>
+                                <span class="minTempWrapper position-absolute translate-middle-y text-secondary">
+                                    <span class="position-relative">
+                                        <span id="temp_min"></span>
+                                        <span class="position-absolute top-0 fw-semibold">°</span>
+                                    </span>
+                                </span>
+                                <span class="maxTempWrapper position-absolute translate-middle-y text-secondary">
+                                    <span class="position-relative">
+                                        <span id="temp_max"></span>
+                                        <span class="position-absolute top-0 fw-semibold">°</span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="wind"></div>
+                    <div class="container">
+                        <div class="row g-3">
+                            <div class="col">
+                                <div id="sunrise" class="border rounded"></div>
+                            </div>
+                            <div class="col">
+                                <div id="sunset" class="border rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="jquery-3.7.1.js"></script>
+    <script src="script.js"></script>
+    <!-- <script src="bootstrap/bootstrap.min.js"></script> -->
+</body>
+</html>
