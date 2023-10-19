@@ -87,7 +87,7 @@ function populateWeatherData(data, units) {
         bar = document.getElementById("bar")
 
     const iconcode = data.weather.at(0).icon
-    const iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png"
+    const iconurl = `http://openweathermap.org/img/wn/${iconcode}@2x.png`
     $('#icon').attr('src', iconurl)
 
     const tempUnit = (units == 'metric') ? '°C' : (units == 'standard' ? '°K' : '°F')
@@ -103,8 +103,16 @@ function populateWeatherData(data, units) {
 
     $('#description').text(data.weather.at(0).description)
 
-    const windSpeedUnit = (units == 'metric') ? 'km/h' : 'mph' // Assuming 'imperial' means mph
-    $('#wind').text( `${data.wind.speed} ${windSpeedUnit}`)
+    let windSpeed = data.wind.speed;
+    let windSpeedUnit = "km/h";
+  
+    if (units == "metric" || units == "standard") {
+      windSpeed = (data.wind.speed * 3.6).toFixed(2);
+    } else if (units == "imperial") {
+      windSpeed = (data.wind.speed).toFixed(2);
+      windSpeedUnit = "mph";
+    }
+    $('#wind').text( `${windSpeed} ${windSpeedUnit}`)
 
     const sunrise = new Date(data.sys.sunrise * 1000)
     const sunset = new Date(data.sys.sunset * 1000)
