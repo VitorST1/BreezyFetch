@@ -29,7 +29,7 @@ Foi desenvolvido como atividade para a disciplina de Webservices do IFSEMG.
 ## Imagens
 
 Estado inicial (tela 2560px):
-!['Site em estado inicial em tela grande (2560px)'](./imagens/cidadeBuscada2560-.png)
+!['Site em estado inicial em tela grande (2560px)'](./imagens/cidadeBuscada2560.png)
 
 Busca realizada (tela 2560px):
 
