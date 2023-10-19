@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mohave:wght@500&family=Roboto+Mono:wght@500&display=swap');
+
 .darkenOnHover:hover {
     background-image: linear-gradient(rgba(39, 39, 39, 0.1) 0 0) !important;
 }
@@ -23,12 +25,22 @@
     max-width: 260px;
     max-height: 260px;
 }
+#icon {
+    margin: -1em;
+}
+.temperature {
+    font-family: 'Roboto Mono', monospace;
+}
+.fs-xxxl {
+    font-size: xx-large;
+    font-size: xxx-large;
+}
 .minTempWrapper {
-    left: -2.5em;
+    left: -3.5em;
     top: 50%;
 }
 .maxTempWrapper {
-    right: -2em;
+    right: -3em;
     top: 50%;
 }
 .w-fit {
@@ -44,6 +56,19 @@
     width: 17svw;
     min-width: 90px;
     max-width: 230px;
+}
+.sunrise-icon {
+    left: 0.13em;
+    top: -1.025em;
+    font-size: xx-large;
+    color: orange;
+}
+.sunset-icon {
+    right: 0.13em;
+    bottom: -1.025em;
+    transform: rotate(180deg);
+    font-size: xx-large;
+    color: orange;
 }
   
 .circle {
@@ -79,6 +104,7 @@
     border: 0.5em solid #bdc3c7;
     border-bottom: 0;
     position: relative;
+    z-index: 1;
 }
 
 @media (width > 768px) {
@@ -89,5 +115,11 @@
 @media not (width > 768px) {
     body > div {
         width: 100%;
+    }
+    #icon {
+        width: 100%;
+    }
+    .fs-xxxl {
+        font-size: xx-large;
     }
 }

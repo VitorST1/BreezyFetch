@@ -94,23 +94,24 @@ function populateWeatherData(data, units) {
     const currentTemp = Math.round(data.main.temp)
     const minTemp = Math.round(data.main.temp_min)
     const maxTemp = Math.round(data.main.temp_max)
-    $('#temp').text(`${currentTemp} ${tempUnit}`)
+    $('#temp').text(`${currentTemp}${tempUnit}`)
     $('#temp_min').text(`${minTemp}`)
     $('#temp_max').text(`${maxTemp}`)
+    changeBackgroundColor(convertToCelsius(currentTemp, units))
 
     const percentage = (((currentTemp - minTemp) || 1) / ((maxTemp - minTemp) || 1)) * 100
     setProgress(percentage)
 
     $('#description').text(data.weather.at(0).description)
 
-    let windSpeed = data.wind.speed;
-    let windSpeedUnit = "km/h";
+    let windSpeed = data.wind.speed
+    let windSpeedUnit = "km/h"
   
     if (units == "metric" || units == "standard") {
-      windSpeed = (data.wind.speed * 3.6).toFixed(2);
+      windSpeed = (data.wind.speed * 3.6).toFixed(2)
     } else if (units == "imperial") {
-      windSpeed = (data.wind.speed).toFixed(2);
-      windSpeedUnit = "mph";
+      windSpeed = (data.wind.speed).toFixed(2)
+      windSpeedUnit = "mph"
     }
     $('#wind').text( `${windSpeed} ${windSpeedUnit}`)
 
@@ -123,6 +124,17 @@ function populateWeatherData(data, units) {
     showWeatherContent()
 }
 
+function convertToCelsius(temp, units) {
+    console.log('unit', units)
+    if (units == 'standard') {
+      return temp - 273.15
+    } else if (units === 'imperial') {
+      return (temp - 32) * (5/9)
+    } else {
+      return temp
+    }
+  }
+
 function setProgress(percent) {
     const p = 180 - (percent / 100) * 180
     bar.style.transform = `rotate(-${p}deg)`
@@ -130,4 +142,29 @@ function setProgress(percent) {
 
 function padNumber(number) {
     return number.toString().padStart(2, '0')
+}
+
+function changeBackgroundColor(temp) {
+    const colors = { // https://materialuicolors.co/
+        "-25": "#0D47A1",
+        "-10": "#1E88E5",
+        0: "#2196F3",
+        5: "#42A5F5",
+        10: "#64B5F6",
+        15: "#90CAF9",
+        20: "#CAE6FD", // azul mais claro
+        25: "#FFCDD2", // vermelho mais claro
+        30: "#EF9A9A",
+        35: "#E57373",
+        40: "#EF5350",
+        45: "#E53935",
+        60: "#E53935",
+        100: "#B71C1C"
+    }
+    
+    const closestTemp = Object.keys(colors).reduce((a, b) =>
+        Math.abs(b - temp) < Math.abs(a - temp) ? b : a
+    )
+
+    $('body').css('background-color', colors[closestTemp])
 }
