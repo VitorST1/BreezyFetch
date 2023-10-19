@@ -75,6 +75,7 @@ function getWithJson(cidade, units) {
         } else {
             hideSpinner()
             errorDiv.innerHTML = "Cidade não encontrada!"
+            $('body').css('background-color', '#212529')
         }
     }   
     
@@ -95,14 +96,16 @@ function populateWeatherData(data, units) {
     const minTemp = Math.round(data.main.temp_min)
     const maxTemp = Math.round(data.main.temp_max)
     $('#temp').text(`${currentTemp}${tempUnit}`)
-    $('#temp_min').text(`${minTemp}`)
-    $('#temp_max').text(`${maxTemp}`)
+    $('#temp_min').text(`${minTemp}°`)
+    $('#temp_max').text(`${maxTemp}°`)
     changeBackgroundColor(convertToCelsius(currentTemp, units))
 
     const percentage = (((currentTemp - minTemp) || 1) / ((maxTemp - minTemp) || 1)) * 100
     setProgress(percentage)
 
     $('#description').text(data.weather.at(0).description)
+
+    $('#city').text(data.name)
 
     let windSpeed = data.wind.speed
     let windSpeedUnit = "km/h"

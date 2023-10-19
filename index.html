@@ -11,7 +11,7 @@
 </head>
 <body class="vstack p-5" data-bs-theme="dark">
     <div class="vstack align-self-center gap-5">
-        <form id="form" class="hstack w-100 gap-3 opacity-75">
+        <form id="form" class="hstack w-100 gap-4 opacity-75">
             <div class="input-group">
                 <div class="hstack justify-content-center align-self-center position-relative form-floating">
                     <button class="p-0 border-0 z-2" type="submit">
@@ -27,14 +27,14 @@
                 </select>
             </div>
         </form>
-        <div class="text-center">
-            <div id="loadingSpinner" class="spinner-border text-secondary d-none" role="status">
+        <div class="text-center vstack">
+            <div id="loadingSpinner" class="spinner-border text-secondary align-self-center d-none" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <div id="errorDiv" class="text-secondary fs-5"></div>
-            <div id="weatherContent" class="d-none">
-                <div class="vstack gap-3 align-items-center rounded">
-                    <div class="vstack align-items-center position-relative">
+            <div id="weatherContent" class="d-none vstack gap-4">
+                <div class="vstack justify-content-end align-items-center">
+                    <div class="position-relative">
                         <div class="wrapper">  
                             <div class="circle-out">
                               <div id="bar" class="circle"></div>
@@ -51,26 +51,29 @@
                                 </span>
                                 <span class="minTempWrapper position-absolute translate-middle-y text-secondary">
                                     <span class="position-relative temperature fs-5">
-                                        <span id="temp_min"></span>
-                                        <span class="position-absolute top-0 fw-semibold">°</span>
+                                        <span id="temp_min" class="text-white-border"></span>
                                     </span>
                                 </span>
                                 <span class="maxTempWrapper position-absolute translate-middle-y text-secondary">
                                     <span class="position-relative temperature fs-5">
-                                        <span id="temp_max"></span>
-                                        <span class="position-absolute top-0 fw-semibold">°</span>
+                                        <span id="temp_max" class="text-white-border"></span>
                                     </span>
                                 </span>
                             </div>
                             <div id="description" class="text-truncate text-capitalize"></div>
                         </div>
                     </div>
-                    <div class="border rounded bg-dark opacity-75 p-2">
+                </div>
+                <div class="vstack gap-4 justify-content-end">
+                    <div class="border rounded bg-dark opacity-75 p-2 w-100">
+                        <div id="city"></div>
+                    </div>
+                    <div class="border rounded bg-dark opacity-75 p-2 w-100">
                         <i class="bi bi-wind fs-5"></i>
                         <div id="wind"></div>
                     </div>
-                    <div class="container">
-                        <div class="row g-3">
+                    <div class="container p-0">
+                        <div class="row g-4">
                             <div class="col">
                                 <div class="border rounded position-relative bg-dark opacity-75 p-2">
                                     Nascer do sol

@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Mohave:wght@500&family=Roboto+Mono:wght@500&display=swap');
 
+body {
+    min-height: 100vh;
+    min-height: 100svh;
+}
 .darkenOnHover:hover {
     background-image: linear-gradient(rgba(39, 39, 39, 0.1) 0 0) !important;
 }
@@ -35,12 +39,15 @@
     font-size: xx-large;
     font-size: xxx-large;
 }
+.text-white-border {
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
 .minTempWrapper {
-    left: -3.5em;
+    left: -4em;
     top: 50%;
 }
 .maxTempWrapper {
-    right: -3em;
+    right: -4em;
     top: 50%;
 }
 .w-fit {
