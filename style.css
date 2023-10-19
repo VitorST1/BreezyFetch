@@ -112,7 +112,7 @@
         width: 50%;
     }
 }
-@media not (width > 768px) {
+@media (width <= 768px) {
     body > div {
         width: 100%;
     }
@@ -121,5 +121,10 @@
     }
     .fs-xxxl {
         font-size: xx-large;
+    }
+}
+@media (width <= 576px) {
+    .fs-xxxl {
+        font-size: x-large !important;
     }
 }
