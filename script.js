@@ -1,6 +1,9 @@
 const form = document.forms["form"] 
 form.addEventListener("submit", getWeather)
 
+const unitsSelect = document.querySelector("#unitsSelect")
+unitsSelect.addEventListener("change", getWeather)
+
 const weatherContent = document.querySelector("#weatherContent")
 const errorDiv = document.querySelector("#errorDiv")
 const loadingSpinner = document.querySelector("#loadingSpinner")
@@ -27,7 +30,7 @@ function getWeather(e) {
 
     saveUnitsToLocalStorage(units)
 
-    getWithJson(cidade, units)
+    getWithXML(cidade, units)
 }
 
 function saveUnitsToLocalStorage(units) {
@@ -57,21 +60,23 @@ function hideWeatherContent() {
     weatherContent.classList.add('d-none')
 }
 
-function getWithJson(cidade, units) {
+function getWithJSON(cidade, units) {
     const req = new XMLHttpRequest()
     
     req.onloadend = function(){
         resp = req.responseText
 
         if(!resp) {
+            hideSpinner()
             errorDiv.innerHTML = "Ocorreu um erro!"
+            $('body').css('background-color', '#212529')
             return
         }
         
         respObj = JSON.parse(resp)
         console.log(respObj)
         if(respObj.cod == 200) {
-            populateWeatherData(respObj, units)
+            populateWeatherDataJSON(respObj, units)
         } else {
             hideSpinner()
             errorDiv.innerHTML = "Cidade não encontrada!"
@@ -83,9 +88,38 @@ function getWithJson(cidade, units) {
     req.send(null)
 }
 
-function populateWeatherData(data, units) {
+function getWithXML(cidade, units) {
+    const req = new XMLHttpRequest()
+    
+    req.onloadend = function() {
+        resp = req.responseText
+
+        if(!resp) {
+            hideSpinner()
+            errorDiv.innerHTML = "Ocorreu um erro!"
+            $('body').css('background-color', '#212529')
+            return
+        }
+        
+        parser = new DOMParser();
+        xmlDoc = parser.parseFromString(resp,"text/xml");
+        console.log(xmlDoc)
+        if(xmlDoc.getElementsByTagName("current")[0]) { // sucesso
+            populateWeatherDataXML(xmlDoc, units)
+        } else {
+            hideSpinner()
+            errorDiv.innerHTML = "Cidade não encontrada!"
+            $('body').css('background-color', '#212529')
+        }
+    }   
+    
+    req.open("GET", `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&mode=xml&appid=${API_KEY}&units=${units}&lang=pt_br`)
+    req.send(null)
+}
+
+function populateWeatherDataJSON(data, units) {
     if(!bar)
-        bar = document.getElementById("bar")
+        bar = $("#bar")[0];
 
     const iconcode = data.weather.at(0).icon
     const iconurl = `http://openweathermap.org/img/wn/${iconcode}@2x.png`
@@ -127,8 +161,81 @@ function populateWeatherData(data, units) {
     showWeatherContent()
 }
 
+function populateWeatherDataXML(xmlDoc, units) {
+    if (!bar) {
+      bar = $("#bar")[0];
+    }
+  
+    const iconcode = $(xmlDoc).find("weather").eq(0).attr("icon");
+    const iconurl = `http://openweathermap.org/img/wn/${iconcode}@2x.png`;
+    $("#icon").attr("src", iconurl);
+  
+    const tempUnit =
+      units == "metric" ? "°C" : units == "standard" ? "°K" : "°F";
+    const currentTemp = Math.round(
+      parseFloat($(xmlDoc).find("temperature").eq(0).attr("value"))
+    );
+    const minTemp = Math.round(
+      parseFloat($(xmlDoc).find("temperature").eq(0).attr("min"))
+    );
+    const maxTemp = Math.round(
+      parseFloat($(xmlDoc).find("temperature").eq(0).attr("max"))
+    );
+    $("#temp").text(`${currentTemp}${tempUnit}`);
+    $("#temp_min").text(`${minTemp}°`);
+    $("#temp_max").text(`${maxTemp}°`);
+    changeBackgroundColor(convertToCelsius(currentTemp, units));
+  
+    const percentage =
+      (((currentTemp - minTemp) || 1) / ((maxTemp - minTemp) || 1)) * 100;
+    setProgress(percentage);
+  
+    $("#description").text(
+      $(xmlDoc).find("weather").eq(0).attr("description")
+    );
+  
+    $("#city").text($(xmlDoc).find("city").eq(0).attr("name"));
+  
+    let windSpeed = parseFloat(
+      $(xmlDoc)
+        .find("wind")
+        .eq(0)
+        .find("speed")
+        .eq(0)
+        .attr("value")
+    );
+    let windSpeedUnit = "km/h";
+  
+    if (units == "metric" || units == "standard") {
+      windSpeed = (windSpeed * 3.6).toFixed(2);
+    } else if (units == "imperial") {
+      windSpeed = windSpeed.toFixed(2);
+      windSpeedUnit = "mph";
+    }
+    $("#wind").text(`${windSpeed} ${windSpeedUnit}`);
+  
+    const sunrise = new Date(
+      parseInt($(xmlDoc).find("sun").eq(0).attr("rise"), 10) * 1000
+    );
+    const sunset = new Date(
+      parseInt($(xmlDoc).find("sun").eq(0).attr("set"), 10) * 1000
+    );
+    $("#sunrise").text(
+      `${padNumber(sunrise.getHours())}:${padNumber(
+        sunrise.getMinutes()
+      )}:${padNumber(sunrise.getSeconds())}`
+    );
+    $("#sunset").text(
+      `${padNumber(sunset.getHours())}:${padNumber(
+        sunset.getMinutes()
+      )}:${padNumber(sunset.getSeconds())}`
+    );
+  
+    hideSpinner();
+    showWeatherContent();
+}
+
 function convertToCelsius(temp, units) {
-    console.log('unit', units)
     if (units == 'standard') {
       return temp - 273.15
     } else if (units === 'imperial') {

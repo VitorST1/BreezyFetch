@@ -20,7 +20,7 @@
                     <input id="cidade" class="form-control ps-5 shadow-sm" type="search" name="cidade" placeholder="Cidade">
                     <label class="bg-transparent ms-2-25rem z-1" for="cidade">Cidade</label>
                 </div>
-                <select class="form-select input-group-text flex-grow-0 w-fit pe-2-25rem" id="units" name="units">
+                <select id="unitsSelect" class="form-select input-group-text flex-grow-0 w-fit pe-2-25rem" id="units" name="units">
                     <option value="metric">°C</option>
                     <option value="standard">°K</option>
                     <option value="imperial">°F</option>
@@ -50,13 +50,19 @@
                                     <span class="position-absolute top-0 fs-6 fw-semibold text-secondary"></span>
                                 </span>
                                 <span class="minTempWrapper position-absolute translate-middle-y text-secondary">
-                                    <span class="position-relative temperature fs-5">
-                                        <span id="temp_min" class="text-white-border"></span>
+                                    <span class="position-relative temperature fs-5 d-flex flex-column text-white-border">
+                                        <div>
+                                            Min.
+                                        </div>
+                                        <div id="temp_min" class="text-white-border"></div>
                                     </span>
                                 </span>
                                 <span class="maxTempWrapper position-absolute translate-middle-y text-secondary">
-                                    <span class="position-relative temperature fs-5">
-                                        <span id="temp_max" class="text-white-border"></span>
+                                    <span class="position-relative temperature fs-5 d-flex flex-column text-white-border">
+                                        <div>
+                                            Max.
+                                        </div>
+                                        <div id="temp_max" class=""></div>
                                     </span>
                                 </span>
                             </div>
