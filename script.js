@@ -122,7 +122,7 @@ function populateWeatherDataJSON(data, units) {
         bar = $("#bar")[0];
 
     const iconcode = data.weather.at(0).icon
-    const iconurl = `http://openweathermap.org/img/wn/${iconcode}@2x.png`
+    const iconurl = `https://openweathermap.org/img/wn/${iconcode}@2x.png`
     $('#icon').attr('src', iconurl)
 
     const tempUnit = (units == 'metric') ? '°C' : (units == 'standard' ? '°K' : '°F')
